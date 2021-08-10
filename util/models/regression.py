@@ -26,7 +26,7 @@ class LinearRegression():
     def update_weights(self, eta):
         self.beta = self.beta - eta * self.weight_gradient().values
     
-    def fit(self, eta, epochs=250, th=1e-3, verbose=20, decay_f=2):
+    def fit(self, eta, epochs=250, th=1e-3, verbose=20, decay_f=2, lr_update=100):
         if self.add_const:
             self.x_data = self.add_constant(self.x_data)
         
@@ -37,7 +37,7 @@ class LinearRegression():
             if (epoch % verbose == 0):
                 print("Epoch: {}; MSE: {}".format(epoch, self.mse_loss()))
             
-            if (epoch % 100 == 0):
+            if (epoch % lr_update == 0):
                 eta /= decay_f
                 print("Learning updated to {} at Epoch: {}\n\n".format(eta, epoch))
             self.update_weights(eta)
