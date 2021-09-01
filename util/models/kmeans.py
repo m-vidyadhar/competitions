@@ -4,6 +4,10 @@ import pandas as pd
 from scipy.spatial.distance import cdist
 import matplotlib.pyplot as plt
 
+
+__author__ = "Vidyadhar Mudium"
+
+
 def plt_clusters(x_data):
     for cluster in x_data.cluster.unique():
         idx = x_data.cluster == cluster
@@ -40,7 +44,7 @@ class KMeans():
         return x_data.assign(cluster=self.calc_distance(x_data).argmin(axis=1))
     
     
-    def fit(self, n_clusters, max_iter=1000, th=1e-5, verbose=250):
+    def fit(self, n_clusters, max_iter=1000, th=1e-5, verbose=250, plots=False):
         iteration = 0
         self.init_centres(n_clusters, self.x_data.shape[1])
         
@@ -50,12 +54,15 @@ class KMeans():
             
             if np.sum((self.hist_c[-1] - self.hist_c[-2]) ** 2) < th:
                 print("Converged after {} iterations!\n".format(iteration))
-                plt_clusters(self.x_data)
+                if plots:
+                    plt_clusters(self.x_data)
                 print(self.c_centres)
                 break
             
             if (iteration % verbose == 0):
-                plt_clusters(self.x_data)
+                print(self.c_centres)
+                if plots:
+                    plt_clusters(self.x_data)
             iteration += 1
         pass
     

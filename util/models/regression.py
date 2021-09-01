@@ -1,6 +1,10 @@
 import numpy as np
 import pandas as pd
 
+
+__author__ = "Vidyadhar Mudium"
+
+
 class LinearRegression():
     def __init__(self, x_data, y, add_const=True):
         self.x_data = x_data
@@ -17,8 +21,8 @@ class LinearRegression():
         self.beta = np.random.rand(self.n_attr + 1)
         pass
     
-    def mse_loss(self):
-        return (self.y - self.y_pred).pow(2).sum() / self.n_samples
+    def mse_loss(self, n_digits=4):
+        return round((self.y - self.y_pred).pow(2).sum() / self.n_samples, n_digits)
     
     def weight_gradient(self):
         return - self.x_data.mul((self.y - self.y_pred) * 2, axis=0).sum() / self.n_samples
@@ -39,7 +43,7 @@ class LinearRegression():
             
             if (epoch % lr_update == 0):
                 eta /= decay_f
-                print("Learning updated to {} at Epoch: {}\n\n".format(eta, epoch))
+                print("Learning updated to {} at Epoch: {}\n".format(round(eta, 3), epoch))
             self.update_weights(eta)
             
             if self.mse_loss() < th:
