@@ -131,14 +131,3 @@ class CGAN2():
             netFC.add(nn.Dense(units = 64, activation = "relu", weight_initializer=self.w_init))
             netFC.add(nn.Dense(units=1, weight_initializer=self.w_init))
         return (netD, netFC)
-
-
-
-
-
-
-
-
-
-
-
